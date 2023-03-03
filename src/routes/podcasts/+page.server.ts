@@ -4,8 +4,6 @@ import { xata } from '../../xata';
 export const load = async () => {
 	const podcasts = await xata.db.Podcasts.getAll();
 
-	console.log({ podcasts });
-
 	return {
 		podcasts
 	};
