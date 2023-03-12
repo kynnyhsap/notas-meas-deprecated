@@ -1,10 +1,10 @@
 <script>
-  import "../app.css";
-  import BottomNavigation from "./BottomNavigation.svelte";
-
+	import '../app.css';
+	import BottomNavigation from './BottomNavigation.svelte';
 </script>
 
-
-<slot />
+<main class="mx-auto">
+	<slot />
+</main>
 
 <BottomNavigation />
