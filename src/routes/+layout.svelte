@@ -1,10 +1,7 @@
 <script>
-	import '../app.css';
-	import BottomNavigation from './BottomNavigation.svelte';
+  import '../app.css';
 </script>
 
-<main class="mx-auto">
-	<slot />
+<main>
+  <slot />
 </main>
-
-<BottomNavigation />

@@ -1,12 +1,11 @@
 import { xata } from '../../xata';
 
-/** @type {import('./$types').PageServerLoad} */
 export const load = async () => {
-	const podcastEpisodeNotes = await xata.db.PodcastEpisodeNotes.sort('createdAt', 'desc').getAll();
-	// const bookHighlights = await xata.db.BookHighlights.sort('createdAt').getAll();
+  const feed = await xata.db.PodcastEpisodeNotes.sort('createdAt', 'desc')
+    .select(['*', 'podcastEpisode.*', 'podcastEpisode.podcast.*'])
+    .getMany();
 
-	return {
-		podcastEpisodeNotes
-		// bookHighlights,
-	};
+  return {
+    feed
+  };
 };
