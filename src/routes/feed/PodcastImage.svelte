@@ -7,7 +7,7 @@
 
 <div>
   {#if src}
-    <img {src} alt="Podcast cover image" class="image" />
+    <img {src} alt="Podcast image" class="image" />
   {:else}
     <img src={defaultSrc} alt="Podcast cover image" class="image" />
   {/if}
@@ -15,10 +15,12 @@
 
 <style lang="postcss">
   .image {
-    @apply rounded-full border border-white;
-    max-width: 40px;
-    max-height: 40px;
-    min-width: 40px;
-    min-height: 40px;
+    --size: 100px;
+
+    @apply rounded border border-white;
+    max-width: var(--size);
+    max-height: var(--size);
+    min-width: var(--size);
+    min-height: var(--size);
   }
 </style>
