@@ -73,7 +73,7 @@ function flatHydratedNote(hydratedNote: PodcastEpisodeNotesRecord): null | FlatH
   return {
     id: hydratedNote.id,
     text: hydratedNote.text as string,
-    createdAt: hydratedNote.createdAt as any as string,
+    createdAt: hydratedNote.createdAt as never as string,
 
     episodeId: hydratedNote.podcastEpisode.id as string,
     episodeTitle: hydratedNote.podcastEpisode.title as string,
