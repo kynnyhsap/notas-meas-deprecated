@@ -14,12 +14,15 @@
   function copyToClipboard(text: string) {
     navigator.clipboard.writeText(text);
 
-    copied = true;
+    if (!copiedTimeoutId) {
+      copied = true;
 
-    if (copiedTimeoutId) clearTimeout(copiedTimeoutId);
-    copiedTimeoutId = setTimeout(() => {
-      copied = false;
-    }, 1500);
+      copiedTimeoutId = setTimeout(() => {
+        copied = false;
+        clearTimeout(copiedTimeoutId);
+        copiedTimeoutId = null;
+      }, 1500);
+    }
   }
 </script>
 
