@@ -3,58 +3,58 @@ import { buildClient } from '@xata.io/client';
 import type { BaseClientOptions, SchemaInference, XataRecord } from '@xata.io/client';
 
 const tables = [
-	{
-		name: 'Podcasts',
-		columns: [
-			{ name: 'title', type: 'string' },
-			{ name: 'image', type: 'string' }
-		]
-	},
-	{
-		name: 'PodcastEpisodes',
-		columns: [
-			{ name: 'podcast', type: 'link', link: { table: 'Podcasts' } },
-			{ name: 'title', type: 'string' }
-		]
-	},
-	{
-		name: 'PodcastEpisodeNotes',
-		columns: [
-			{ name: 'createdAt', type: 'datetime' },
-			{
-				name: 'podcastEpisode',
-				type: 'link',
-				link: { table: 'PodcastEpisodes' }
-			},
-			{ name: 'text', type: 'text' }
-		]
-	},
-	{
-		name: 'Notes',
-		columns: [
-			{ name: 'text', type: 'text' },
-			{ name: 'createdAt', type: 'datetime' }
-		]
-	},
-	{
-		name: 'Books',
-		columns: [
-			{ name: 'readwiseId', type: 'int', unique: true },
-			{ name: 'image', type: 'string' },
-			{ name: 'title', type: 'string' },
-			{ name: 'author', type: 'string' }
-		]
-	},
-	{
-		name: 'BookHighlights',
-		columns: [
-			{ name: 'readwiseId', type: 'int', unique: true },
-			{ name: 'text', type: 'text' },
-			{ name: 'note', type: 'text' },
-			{ name: 'book', type: 'link', link: { table: 'Books' } },
-			{ name: 'createdAt', type: 'datetime' }
-		]
-	}
+  {
+    name: 'Podcasts',
+    columns: [
+      { name: 'title', type: 'string' },
+      { name: 'image', type: 'string' }
+    ]
+  },
+  {
+    name: 'PodcastEpisodes',
+    columns: [
+      { name: 'podcast', type: 'link', link: { table: 'Podcasts' } },
+      { name: 'title', type: 'string' }
+    ]
+  },
+  {
+    name: 'PodcastEpisodeNotes',
+    columns: [
+      { name: 'createdAt', type: 'datetime' },
+      {
+        name: 'podcastEpisode',
+        type: 'link',
+        link: { table: 'PodcastEpisodes' }
+      },
+      { name: 'text', type: 'text' }
+    ]
+  },
+  {
+    name: 'Notes',
+    columns: [
+      { name: 'text', type: 'text' },
+      { name: 'createdAt', type: 'datetime' }
+    ]
+  },
+  {
+    name: 'Books',
+    columns: [
+      { name: 'readwiseId', type: 'int', unique: true },
+      { name: 'image', type: 'string' },
+      { name: 'title', type: 'string' },
+      { name: 'author', type: 'string' }
+    ]
+  },
+  {
+    name: 'BookHighlights',
+    columns: [
+      { name: 'readwiseId', type: 'int', unique: true },
+      { name: 'text', type: 'text' },
+      { name: 'note', type: 'text' },
+      { name: 'book', type: 'link', link: { table: 'Books' } },
+      { name: 'createdAt', type: 'datetime' }
+    ]
+  }
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -79,36 +79,35 @@ export type BookHighlights = InferredTypes['BookHighlights'];
 export type BookHighlightsRecord = BookHighlights & XataRecord;
 
 export type DatabaseSchema = {
-	Podcasts: PodcastsRecord;
-	PodcastEpisodes: PodcastEpisodesRecord;
-	PodcastEpisodeNotes: PodcastEpisodeNotesRecord;
-	Notes: NotesRecord;
-	Books: BooksRecord;
-	BookHighlights: BookHighlightsRecord;
+  Podcasts: PodcastsRecord;
+  PodcastEpisodes: PodcastEpisodesRecord;
+  PodcastEpisodeNotes: PodcastEpisodeNotesRecord;
+  Notes: NotesRecord;
+  Books: BooksRecord;
+  BookHighlights: BookHighlightsRecord;
 };
 
 const DatabaseClient = buildClient();
 
 const defaultOptions = {
-	databaseURL: 'https://Andriy-Pashynnyk-s-workspace-0j5g5v.eu-west-1.xata.sh/db/my-notes-engine'
+  databaseURL: 'https://Andriy-Pashynnyk-s-workspace-0j5g5v.eu-west-1.xata.sh/db/my-notes-engine'
 };
 
 export class XataClient extends DatabaseClient<DatabaseSchema> {
-	constructor(options?: BaseClientOptions) {
-		super({ ...defaultOptions, ...options }, tables);
-	}
+  constructor(options?: BaseClientOptions) {
+    super({ ...defaultOptions, ...options }, tables);
+  }
 }
 
 let instance: XataClient | undefined = undefined;
 
 export const getXataClient = () => {
-	if (instance) return instance;
+  if (instance) return instance;
 
-	instance = new XataClient({
-		apiKey: import.meta.env.VITE_XATA_API_KEY,
-		branch: import.meta.env.VITE_XATA_FALLBACK_BRANCH
-	});
-	return instance;
+  instance = new XataClient({
+    apiKey: import.meta.env.VITE_XATA_API_KEY
+  });
+  return instance;
 };
 
 export const xata = getXataClient();
