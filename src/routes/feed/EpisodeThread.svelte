@@ -1,16 +1,14 @@
 <script lang="ts">
-  import Time from 'svelte-time';
   import PodcastImage from './PodcastImage.svelte';
   import type { HydratedEpisode } from './+page.server';
+  import Note from './Note.svelte';
 
   export let episode: HydratedEpisode;
 
-  function copyToClipboard(text: string) {
-    navigator.clipboard.writeText(text);
-  }
-
   $: episodeTitle =
     episode.title.length > 100 ? episode.title.slice(0, 100) + '...' : episode.title;
+
+  $: episodeNotes = episode.notes ?? [];
 </script>
 
 <div class="px-4 py-10 relative border-b border-b-gray-500">
@@ -24,31 +22,10 @@
   </div>
 
   <ul>
-    {#each episode.notes as note}
-      <li class="my-8" on:click={() => copyToClipboard(note.text)}>
-        <div class="mx-4 px-4 border-l-2 border-l-gray-500 note-text">
-          <span>{note.text}</span>
-        </div>
-
-        <div class="m-2 text-sm text-gray-500 text-right">
-          <Time format="MMM D, HH:mm" timestamp={note.createdAt} />
-        </div>
+    {#each episodeNotes as note}
+      <li>
+        <Note {note} />
       </li>
     {/each}
   </ul>
 </div>
-
-<style>
-  .note-text:active {
-    animation: copied-effect 0.5s ease-out;
-  }
-
-  @keyframes copied-effect {
-    0% {
-      color: white;
-    }
-    80% {
-      color: forestgreen;
-    }
-  }
-</style>
